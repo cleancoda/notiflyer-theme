@@ -1,21 +1,34 @@
 package org.notiflyer;
 
-import javax.swing.*;
-
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-
-import java.awt.*;
-
+import java.awt.Color;
+import java.awt.Font;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
-import com.formdev.flatlaf.*;
-import com.formdev.flatlaf.intellijthemes.*;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatNightOwlIJTheme;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+
+import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
 
 /**
  * Hello world!
@@ -44,7 +57,7 @@ public class App
 
         // Print all the keys
         for (Object key : keyList) {
-            System.out.println(key);
+            //System.out.println(key);
         }
 
         // Set the look and feel
@@ -82,9 +95,30 @@ public class App
 
         // Create and show a sample frame
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     FlatDraculaIJTheme.setup();
+                    Properties prop = new Properties();
+                    try {
+                        prop.load(new FileInputStream("src/main/java/org/notiflyer/view/themes/periwinkle/style.properties"));
+                        for (String propertyName : prop.stringPropertyNames()) {
+                            // if(prop.getProperty(propertyName).isEmpty() || prop.getProperty(propertyName) == null) {
+                            //     continue;
+                            // }
+                            try {
+                                System.out.println(prop.getProperty(propertyName));
+                                UIManager.put(propertyName, Color.decode(prop.getProperty(propertyName)));
+                            }
+                            catch(Exception e) {
+                                System.out.println("Error setting property: " + propertyName);
+                                //e.printStackTrace();
+                            }
+                            
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -93,9 +127,11 @@ public class App
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800,800);
 
-                UIManager.put("Panel.background", Color.decode("#2b283e"));
-               
+                // UIManager.put("TextField.background", Color.decode("#2b283e"));
+                // UIManager.put("TextArea.background", Color.decode("#2b283e"));
+
                 
+
                 // Add GUI components
                 JPanel panel = new JPanel();
                 JLabel label = new JLabel("Hello, World!");
