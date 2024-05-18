@@ -57,7 +57,7 @@ public class App
 
         // Print all the keys
         for (Object key : keyList) {
-            //System.out.println(key);
+            System.out.println(key);
         }
 
         // Set the look and feel
@@ -101,13 +101,14 @@ public class App
                     FlatDraculaIJTheme.setup();
                     Properties prop = new Properties();
                     try {
-                        prop.load(new FileInputStream("src/main/java/org/notiflyer/view/themes/periwinkle/style.properties"));
+                        prop.load(new FileInputStream("resources/themes/periwinkle/style.properties"));
                         for (String propertyName : prop.stringPropertyNames()) {
                             // if(prop.getProperty(propertyName).isEmpty() || prop.getProperty(propertyName) == null) {
                             //     continue;
                             // }
+
                             try {
-                                System.out.println(prop.getProperty(propertyName));
+                                
                                 UIManager.put(propertyName, Color.decode(prop.getProperty(propertyName)));
                             }
                             catch(Exception e) {
