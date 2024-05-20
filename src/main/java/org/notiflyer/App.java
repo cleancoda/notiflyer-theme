@@ -29,13 +29,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
+import java.awt.Dimension;
+
+import org.notiflyer.controller.utils.HostMachineUtils;
+
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
 
-import org.notiflyer.controller.util.HostMachineAPI;
-
 /**
- * Hello world!
- *
+ * 
+ * @author anon
  */
 public class App 
 {
@@ -101,35 +104,46 @@ public class App
             @Override
             public void run() {
                 try {
-                    FlatDraculaIJTheme.setup();
+                    //FlatLaf.registerCustomDefaultsSource("org.notiflyer.themes");
+                    
                     Properties prop = new Properties();
                     try {
-                        prop.load(new FileInputStream("resources/themes/periwinkle/style.properties"));
+                        UIManager.put( "Button.arc", 999 );
+                        //UIManager.put( "Component.arc", 999 );
+                        prop.load(new FileInputStream("resources/themes/periwinkle/theme.properties"));
                         for (String propertyName : prop.stringPropertyNames()) {
                             // if(prop.getProperty(propertyName).isEmpty() || prop.getProperty(propertyName) == null) {
                             //     continue;
                             // }
 
                             try {
-                                
-                                UIManager.put(propertyName, Color.decode(prop.getProperty(propertyName)));
-                            }
-                            catch(Exception e) {
+                                String propertyValue = prop.getProperty(propertyName);
+                                if (propertyValue.matches("#[0-9A-Fa-f]{6}")) {
+                                    UIManager.put(propertyName, Color.decode(propertyValue));
+                                } else {
+                                    UIManager.put(propertyName, propertyValue);
+                                }
+                            } catch (Exception e) {
                                 System.out.println("Error setting property: " + propertyName);
                                 //e.printStackTrace();
+                                
                             }
+                            
                             
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                    FlatDraculaIJTheme.setup();
+
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 JFrame frame = new JFrame("Custom Theme");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                Dimension screenSize = new HostMachineAPI().getReducedScreenSize();
+                Dimension screenSize = new HostMachineUtils().getReducedScreenSize();
 
                 frame.setSize(screenSize);
                 frame.setLocationRelativeTo(null);
@@ -167,6 +181,8 @@ public class App
                 textArea.setFont(newFont);
                 passwordField.setFont(newFont);
                 slider.setFont(newFont);
+
+                button.setPreferredSize(new Dimension(200,200));
                 
 
                 panel.add(passwordField);

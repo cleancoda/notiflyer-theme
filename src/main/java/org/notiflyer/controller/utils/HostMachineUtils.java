@@ -23,8 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 */
 
-package org.notiflyer.controller.util;
-
+package org.notiflyer.controller.utils;
 // import statements
 import java.awt.Dimension; // size of the host machine resolution
 import java.awt.Toolkit; // api to fetch host information
@@ -33,7 +32,7 @@ import java.awt.Toolkit; // api to fetch host information
  * This class is used to interact with the host machine
  * @author anon
  */
-public class HostMachineAPI {
+public class HostMachineUtils {
 
     // class variables
     private String hostName;
@@ -44,7 +43,7 @@ public class HostMachineAPI {
     /**
      * Default constructor
      */
-    public HostMachineAPI() {
+    public HostMachineUtils() {
     }
 
     /**
