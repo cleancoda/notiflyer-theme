@@ -1,6 +1,7 @@
 package org.notiflyer;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,6 +30,8 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
+
+import org.notiflyer.controller.util.HostMachineAPI;
 
 /**
  * Hello world!
@@ -126,7 +129,10 @@ public class App
                 }
                 JFrame frame = new JFrame("Custom Theme");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(800,800);
+                Dimension screenSize = new HostMachineAPI().getReducedScreenSize();
+
+                frame.setSize(screenSize);
+                frame.setLocationRelativeTo(null);
 
                 // UIManager.put("TextField.background", Color.decode("#2b283e"));
                 // UIManager.put("TextArea.background", Color.decode("#2b283e"));
