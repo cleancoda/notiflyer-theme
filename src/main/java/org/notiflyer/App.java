@@ -28,13 +28,18 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.Dimension;
 
 import org.notiflyer.controller.utils.HostMachineUtils;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 /**
  * 
@@ -105,37 +110,48 @@ public class App
             public void run() {
                 try {
                     //FlatLaf.registerCustomDefaultsSource("org.notiflyer.themes");
+                    //FlatDraculaIJTheme.setup();
+                    FlatLaf.registerCustomDefaultsSource( "org.notiflyer.themes" );
+                    //FlatDraculaIJTheme.setup();
+                    //FlatDarculaLaf.setup();
+                    FlatMacDarkLaf.setup();
                     
-                    Properties prop = new Properties();
-                    try {
-                        UIManager.put( "Button.arc", 999 );
-                        //UIManager.put( "Component.arc", 999 );
-                        prop.load(new FileInputStream("resources/themes/periwinkle/theme.properties"));
-                        for (String propertyName : prop.stringPropertyNames()) {
-                            // if(prop.getProperty(propertyName).isEmpty() || prop.getProperty(propertyName) == null) {
-                            //     continue;
-                            // }
 
-                            try {
-                                String propertyValue = prop.getProperty(propertyName);
-                                if (propertyValue.matches("#[0-9A-Fa-f]{6}")) {
-                                    UIManager.put(propertyName, Color.decode(propertyValue));
-                                } else {
-                                    UIManager.put(propertyName, propertyValue);
-                                }
-                            } catch (Exception e) {
-                                System.out.println("Error setting property: " + propertyName);
-                                //e.printStackTrace();
+
+                    
+                    // FlatDarkLaf.setup();
+                    // Properties prop = new Properties();
+                    // try {
+                    //     // UIManager.put( "Button.arc", 999 );
+                    //     //UIManager.put( "Component.arc", 999 );
+                        
+                    //     prop.load(new FileInputStream("resources/themes/periwinkle/theme.properties"));
+                    //     for (String propertyName : prop.stringPropertyNames()) {
+                    //         // if(prop.getProperty(propertyName).isEmpty() || prop.getProperty(propertyName) == null) {
+                    //         //     continue;
+                    //         // }
+
+                    //         try {
+                    //             String propertyValue = prop.getProperty(propertyName);
+                    //             if (propertyValue.matches("#[0-9A-Fa-f]{6}")) {
+                    //                 UIManager.put(propertyName, Color.decode(propertyValue));
+                    //             } else {
+                    //                 UIManager.put(propertyName, propertyValue);
+                    //             }
+                    //         } catch (Exception e) {
+                    //             System.out.println("Error setting property: " + propertyName);
+                    //             //e.printStackTrace();
                                 
-                            }
+                    //         }
                             
                             
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    //     }
+                    // } catch (IOException e) {
+                    //     e.printStackTrace();
+                    // }
 
-                    FlatDraculaIJTheme.setup();
+                    
+                    
 
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -198,7 +214,12 @@ public class App
                 
                 frame.add(panel);
                 frame.setVisible(true);
-
+                LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
+                UIManager.getLookAndFeel();
+                    for (LookAndFeelInfo laf : lafs) {
+                        System.out.println(laf.getName());
+                        System.out.println(laf.getClassName());
+                    }
 
             }
         });
